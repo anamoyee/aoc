@@ -9,6 +9,8 @@ fn dbg_board(board: &[Vec<char>], iteration_i: Option<i32>) {
     _ = "├─┼┤";
     _ = "└─┴┘";
 
+    print!("\x1B[2J\x1B[H"); // Clear the screen
+
     let width = board[0].len();
     if iteration_i.is_none() {
         print!("   ");
@@ -46,9 +48,9 @@ fn dbg_board(board: &[Vec<char>], iteration_i: Option<i32>) {
                     'X' => "  ".black().on_red(),
                     '^' => "▄▄".black().on_blue(),
                     'v' => "▄▄".black().blue(),
-                    '<' => format!("{}{}", " ".blue(), " ".on_blue()).normal(),
-                    '>' => format!("{}{}", " ".on_blue(), " ".blue()).normal(),
-                    invalid => panic!("Invalid character: {invalid:#?}"),
+                    '<' => format!("{}{}", " ".on_blue(), " ".blue()).normal(),
+                    '>' => format!("{}{}", " ".blue(), " ".on_blue()).normal(),
+                    _ => "??".normal(),
                 }
             );
         }
@@ -150,7 +152,7 @@ fn process_frame(board: &mut [Vec<char>]) -> bool {
             board[player_pos.0][player_pos.1] = 'X';
             board[next_player_pos.0][next_player_pos.1] = player_rot.as_char();
         }
-        '#' => {
+        '#' | 'O' => {
             board[player_pos.0][player_pos.1] = player_rot.next().as_char();
         }
         invalid => panic!("Invalid character {invalid:#?}"),
@@ -167,7 +169,8 @@ fn get_total_xs_on_board(board: &[Vec<char>]) -> usize {
 }
 
 fn main() {
-    let input = input!().replace("\r\n", "\n");
+    let input = input_test!().replace("\r\n", "\n");
+    let n = 1;
 
     let mut board = input
         .lines()
@@ -176,7 +179,7 @@ fn main() {
 
     let mut i = 0;
     loop {
-        let should_print = i % 1000 == 0;
+        let should_print = if n != 0 { i % n == 0 } else { false };
 
         if should_print {
             dbg_board(&board, Some(i));
