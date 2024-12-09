@@ -168,13 +168,9 @@ fn process_frame(
 fn is_board_finite(board: &mut [Vec<char>]) -> bool {
     let mut board_ids = Vec::new();
 
-    let mut i = 0;
-
     let mut last_player_pos: Option<(usize, usize)> = None;
 
     loop {
-        i += 1;
-
         let this_board_player_pos = get_player_pos_in_board(board);
         let this_board_id = (
             this_board_player_pos.0,
