@@ -52,3 +52,19 @@ macro_rules! input_test {
         input!("_test")
     };
 }
+
+pub fn char_to_color(c: &char) -> colored::Color {
+    let value = match c {
+        '0'..='9' => *c as u8 - b'0',
+        'a'..='z' => *c as u8 - b'a' + 10,
+        'A'..='Z' => *c as u8 - b'A' + 36,
+        _ => 0,
+    } + 100;
+
+    let r = value.wrapping_mul(199);
+    let g = value.wrapping_mul(227);
+    let b = value.wrapping_mul(61);
+
+    colored::Color::TrueColor { r, g, b }
+}
+

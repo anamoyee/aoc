@@ -2,20 +2,7 @@
 use aoc::{input, input_test};
 use colored::*;
 
-fn char_to_color(c: &char) -> colored::Color {
-    let value = match c {
-        '0'..='9' => *c as u8 - b'0',
-        'a'..='z' => *c as u8 - b'a' + 10,
-        'A'..='Z' => *c as u8 - b'A' + 36,
-        _ => 0,
-    } + 100;
-
-    let r = value.wrapping_mul(199);
-    let g = value.wrapping_mul(227);
-    let b = value.wrapping_mul(61);
-
-    colored::Color::TrueColor { r, g, b }
-}
+use aoc::char_to_color;
 
 fn board_union<T: Clone>(
     is_empty_predicate: impl Fn(&T) -> bool,
