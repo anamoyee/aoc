@@ -67,4 +67,3 @@ pub fn char_to_color(c: &char) -> colored::Color {
 
     colored::Color::TrueColor { r, g, b }
 }
-
