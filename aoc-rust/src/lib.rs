@@ -21,10 +21,8 @@ pub fn _read_input(day: u8, suffix: &str) -> String {
 
 #[macro_export]
 macro_rules! input {
-    () => {
-        input!("")
-    };
-    ($suffix:expr) => {
+    () => {{ input!("") }};
+    ($suffix:expr) => {{
         aoc::_read_input(
             file!()
                 .replace("\\", "/")
@@ -43,7 +41,7 @@ macro_rules! input {
                 ),
             &format!("{}", $suffix),
         )
-    };
+    }};
 }
 
 #[macro_export]
