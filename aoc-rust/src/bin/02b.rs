@@ -1,5 +1,20 @@
 use aoc::prelude::*;
 
+trait AllElementsEq: Iterator {
+    fn all_elements_eq(self) -> bool
+    where
+        Self::Item: PartialEq,
+        Self: Sized,
+    {
+        self.map(|item| Some(item))
+            .reduce(|acc, item| if acc == item { acc } else { None })
+            .unwrap()
+            .is_some()
+    }
+}
+
+impl<I: Iterator> AllElementsEq for I {}
+
 fn main() {
     let ranges = input!()
         .trim()
@@ -28,10 +43,7 @@ fn main() {
                     .collect::<Vec<_>>()
                     .chunks(chunk_size)
                     .map(|chunk| chunk.iter().collect::<String>())
-                    .map(|item| Some(item))
-                    .reduce(|acc, item| if acc == item { acc } else { None })
-                    .unwrap()
-                    .is_some()
+                    .all_elements_eq()
                 {
                     sum += i as u128;
                     break;
