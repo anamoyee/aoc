@@ -41,6 +41,8 @@ macro_rules! input {
                 ),
             &format!("{}", $suffix),
         )
+        .trim()
+        .to_owned()
     }};
 }
 

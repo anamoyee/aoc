@@ -17,7 +17,6 @@ impl<I: Iterator> AllElementsEq for I {}
 
 fn main() {
     let ranges = input!()
-        .trim()
         .split(',')
         .map(|s| {
             s.split_once('-')
